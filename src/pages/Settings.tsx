@@ -22,7 +22,7 @@ export function Settings() {
     <div>
       <Header title="Settings" subtitle="Prototype preferences for the FreightIQ workflow." />
 
-      <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="maritime-card rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
         <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">Preferences</p>
 
         <div className="mt-5 space-y-5">

@@ -33,7 +33,7 @@ export function Forecast() {
         subtitle={`${route} · Cargo: ${requirement.cargoType} · Recommended Vessel: ${vessel.type}`}
       />
 
-      <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="maritime-card rounded-3xl border border-slate-200 bg-white p-5 shadow-sm" style={{ animationDelay: '20ms' }}>
         <div className="mb-5 flex flex-wrap items-center gap-4">
           <div className="text-sm text-slate-600">
             <span className="mb-2 block font-medium text-slate-700">Route</span>
@@ -55,22 +55,12 @@ export function Forecast() {
       </div>
 
       <div className="mt-8 grid gap-4 md:grid-cols-4">
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <p className="text-sm text-slate-500">Current Market</p>
-          <p className="mt-4 text-2xl font-semibold text-slate-900">{displayCurrent}</p>
-        </div>
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <p className="text-sm text-slate-500">Forecast</p>
-          <p className="mt-4 text-2xl font-semibold text-slate-900">{displayExpected}</p>
-        </div>
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <p className="text-sm text-slate-500">Expected Change</p>
-          <p className="mt-4 text-2xl font-semibold text-rose-600">{forecast.change}</p>
-        </div>
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <p className="text-sm text-slate-500">Market Outlook</p>
-          <p className="mt-4 text-2xl font-semibold text-slate-900">Softening</p>
-        </div>
+        {[{ label: 'Current Market', value: displayCurrent }, { label: 'Forecast', value: displayExpected }, { label: 'Expected Change', value: forecast.change, strong: true }, { label: 'Market Outlook', value: 'Softening' }].map((item, index) => (
+          <div key={item.label} style={{ animationDelay: `${80 + index * 60}ms` }} className="maritime-card rounded-2xl p-5">
+            <p className="text-sm text-slate-500">{item.label}</p>
+            <p className={`mt-4 text-2xl font-semibold ${item.strong ? 'text-rose-600' : 'text-slate-900'}`}>{item.value}</p>
+          </div>
+        ))}
       </div>
 
       <div className="mt-8 rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm">
@@ -84,8 +74,8 @@ export function Forecast() {
             ['Port Congestion', 'Low ↓'],
             ['Seasonal Demand', 'High ↑'],
             ['Bunker Costs', 'Moderate →'],
-          ].map(([label, value]) => (
-            <div key={label} className="rounded-2xl border border-slate-200 bg-white p-4">
+          ].map(([label, value], index) => (
+            <div key={label} style={{ animationDelay: `${150 + index * 60}ms` }} className="maritime-card rounded-2xl border border-slate-200 bg-white p-4">
               <p className="text-xs uppercase tracking-[0.14em] text-slate-400">{label}</p>
               <p className="mt-3 text-lg font-semibold text-slate-900">{value}</p>
             </div>

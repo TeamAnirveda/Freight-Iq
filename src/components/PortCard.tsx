@@ -6,13 +6,15 @@ type PortCardProps = {
   maxLOA: string
   maxBeam: string
   cargoHandling: string
+  className?: string
+  style?: React.CSSProperties
 }
 
-export function PortCard({ name, maxDraft, maxLOA, maxBeam, cargoHandling }: PortCardProps) {
+export function PortCard({ name, maxDraft, maxLOA, maxBeam, cargoHandling, className, style }: PortCardProps) {
   const preferences = usePreferences()
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className={`maritime-card rounded-2xl p-5 ${className ?? ''}`} style={style}>
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-lg font-semibold text-slate-900">{name}</h3>
         <span className="rounded-full bg-emerald-50 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-emerald-700 ring-1 ring-emerald-100">

@@ -37,14 +37,14 @@ export function Ports() {
         subtitle={`${requirement.origin} → ${requirement.destination} · ${requirement.cargoType} · ${formatMass(Number(requirement.quantity), preferences.units)}`}
       />
 
-      <div className="mb-6 rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm">
+      <div className="maritime-card mb-6 rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm" style={{ animationDelay: '20ms' }}>
         <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">Current Route</p>
         <div className="mt-3 text-xl font-semibold text-slate-900">{requirement.origin} → {requirement.destination}</div>
       </div>
 
       <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
         {destinationPort ? (
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm md:col-span-2 xl:col-span-3">
+          <div className="maritime-card rounded-2xl border border-slate-200 bg-white p-5 shadow-sm md:col-span-2 xl:col-span-3" style={{ animationDelay: '100ms' }}>
             <div className="mb-5 flex items-center justify-between gap-3">
               <div>
                 <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">Destination Port</p>
@@ -55,8 +55,8 @@ export function Ports() {
               </span>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              {compatibility.map(([label, value]) => (
-                <div key={label} className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+              {compatibility.map(([label, value], index) => (
+                <div key={label} style={{ animationDelay: `${150 + index * 60}ms` }} className="maritime-card rounded-xl border border-slate-200 bg-slate-50 p-4">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">{label}</p>
                   <p className="mt-2 text-lg font-semibold text-slate-900">{value}</p>
                 </div>
@@ -68,7 +68,7 @@ export function Ports() {
           </div>
         ) : null}
 
-        {portReferences.map((port) => (
+        {portReferences.map((port, index) => (
           <PortCard
             key={port.name}
             name={port.name}
@@ -76,6 +76,7 @@ export function Ports() {
             maxLOA={port.maxLOA}
             maxBeam={port.maxBeam}
             cargoHandling={port.cargoHandling}
+            style={{ animationDelay: `${180 + index * 80}ms` }}
           />
         ))}
       </div>

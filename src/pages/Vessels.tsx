@@ -34,7 +34,7 @@ export function Vessels() {
         subtitle={`${requirement.cargoType} · ${formatMass(Number(requirement.quantity), preferences.units)} · ${requirement.origin} → ${requirement.destination}`}
       />
 
-      <div className="mb-6 rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm">
+      <div className="maritime-card mb-6 rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm" style={{ animationDelay: '20ms' }}>
         <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">Current Requirement</p>
         <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-slate-700">
           <span className="font-semibold text-slate-900">{requirement.cargoType}</span>
@@ -43,7 +43,7 @@ export function Vessels() {
         </div>
       </div>
 
-      <div className="mb-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="maritime-card mb-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm" style={{ animationDelay: '90ms' }}>
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Recommended Vessel</p>
         <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -57,30 +57,35 @@ export function Vessels() {
       </div>
 
       <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-4">
-        {comparison.map((vessel) => {
+        {comparison.map((vessel, index) => {
           const isRecommended = vessel.name === recommended.type
+
           return (
-            <div key={vessel.name} className={`rounded-2xl border p-5 shadow-sm ${isRecommended ? 'border-slate-900 bg-slate-900 text-white' : 'border-slate-200 bg-white text-slate-800'}`}>
-              <div className="mb-4 flex items-center justify-between">
-                <h3 className={`text-xl font-semibold ${isRecommended ? 'text-white' : 'text-slate-900'}`}>{vessel.name}</h3>
-                {isRecommended ? <span className="rounded-full bg-white/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-100">Recommended</span> : null}
+            <div key={vessel.name} style={{ animationDelay: `${150 + index * 80}ms` }} className={`maritime-card rounded-2xl border p-5 shadow-sm ${isRecommended ? 'maritime-card--recommended' : 'border-slate-200 bg-white text-slate-800'}`}>
+              <div className="mb-4 flex items-center justify-between gap-2">
+                <h3 className="text-xl font-semibold text-slate-900">{vessel.name}</h3>
+                {isRecommended ? (
+                  <span className="rounded-full bg-cyan-500/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-cyan-700 ring-1 ring-cyan-200/80">
+                    Recommended
+                  </span>
+                ) : null}
               </div>
               <div className="space-y-4 text-sm">
                 <div>
-                  <p className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${isRecommended ? 'text-slate-300' : 'text-slate-400'}`}>Capacity</p>
-                  <p className={`mt-1 font-medium ${isRecommended ? 'text-white' : 'text-slate-800'}`}>{vessel.capacity}</p>
+                  <p className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${isRecommended ? 'text-cyan-700' : 'text-slate-400'}`}>Capacity</p>
+                  <p className="mt-1 font-medium text-slate-800">{vessel.capacity}</p>
                 </div>
                 <div>
-                  <p className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${isRecommended ? 'text-slate-300' : 'text-slate-400'}`}>Cargo fit</p>
-                  <p className={`${isRecommended ? 'text-slate-200' : 'text-slate-700'}`}>{vessel.name === 'Panamax' ? 'Excellent' : vessel.name === 'Capesize' ? 'Oversized' : 'Moderate'}</p>
+                  <p className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${isRecommended ? 'text-cyan-700' : 'text-slate-400'}`}>Cargo fit</p>
+                  <p className="text-slate-700">{vessel.name === 'Panamax' ? 'Excellent' : vessel.name === 'Capesize' ? 'Oversized' : 'Moderate'}</p>
                 </div>
                 <div>
-                  <p className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${isRecommended ? 'text-slate-300' : 'text-slate-400'}`}>Port fit</p>
-                  <p className={`${isRecommended ? 'text-slate-200' : 'text-slate-700'}`}>{vessel.portFlexibility}</p>
+                  <p className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${isRecommended ? 'text-cyan-700' : 'text-slate-400'}`}>Port fit</p>
+                  <p className="text-slate-700">{vessel.portFlexibility}</p>
                 </div>
                 <div>
-                  <p className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${isRecommended ? 'text-slate-300' : 'text-slate-400'}`}>Overall</p>
-                  <p className={`${isRecommended ? 'text-white' : 'text-slate-700'}`}>{isRecommended ? 'Recommended' : vessel.name === 'Capesize' ? 'Not Suitable' : 'Possible'}</p>
+                  <p className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${isRecommended ? 'text-cyan-700' : 'text-slate-400'}`}>Overall</p>
+                  <p className="text-slate-700">{isRecommended ? 'Recommended' : vessel.name === 'Capesize' ? 'Not Suitable' : 'Possible'}</p>
                 </div>
               </div>
             </div>

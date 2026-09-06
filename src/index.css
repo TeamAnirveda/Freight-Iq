@@ -5,11 +5,17 @@
   line-height: 1.5;
   font-weight: 400;
   color: #0f172a;
-  background: #f8fafc;
+  background: #edf5fb;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --maritime-navy: #071a2d;
+  --maritime-navy-2: #0d2340;
+  --maritime-ice: #edf6ff;
+  --maritime-cyan: #22c7d6;
+  --maritime-blue: #4da3d9;
+  --maritime-slate: #475569;
 }
 
 * {
@@ -23,8 +29,23 @@ html {
 body {
   margin: 0;
   min-width: 320px;
-  background: #f8fafc;
+  background:
+    radial-gradient(circle at top left, rgba(77, 163, 217, 0.18), transparent 29%),
+    radial-gradient(circle at bottom right, rgba(34, 199, 214, 0.12), transparent 30%),
+    linear-gradient(180deg, #f4f9ff 0%, #edf5fb 100%);
   color: #0f172a;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, rgba(148, 163, 184, 0.04), transparent 35%),
+    radial-gradient(circle at 15% 18%, rgba(34, 199, 214, 0.08), transparent 18%),
+    radial-gradient(circle at 85% 10%, rgba(59, 130, 246, 0.08), transparent 20%);
 }
 
 button,
@@ -35,4 +56,196 @@ select {
 
 #root {
   min-height: 100vh;
+}
+
+.page-shell {
+  animation: pageFadeIn 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.maritime-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(240, 249, 255, 0.9));
+  box-shadow: 0 20px 48px -34px rgba(15, 23, 42, 0.46);
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, background-color 220ms ease;
+  animation: cardEntrance 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--card-delay, 0ms);
+}
+
+.maritime-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(34, 199, 214, 0.04), rgba(96, 165, 250, 0.03));
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.maritime-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(34, 199, 214, 0.42);
+  box-shadow: 0 28px 56px -32px rgba(14, 165, 233, 0.38);
+}
+
+.maritime-card--strong {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(239, 246, 255, 0.92));
+}
+
+.maritime-card--recommended {
+  border-color: rgba(34, 199, 214, 0.58);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(238, 247, 255, 0.96));
+  box-shadow: 0 26px 54px -32px rgba(8, 145, 178, 0.52), inset 0 0 0 1px rgba(34, 199, 214, 0.14);
+}
+
+.maritime-card--recommended::before {
+  opacity: 1;
+}
+
+.maritime-card--recommended > * {
+  position: relative;
+  z-index: 1;
+}
+
+.form-section-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(186, 230, 253, 0.8);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(241, 245, 249, 0.72));
+  box-shadow: 0 20px 56px -40px rgba(15, 23, 42, 0.4);
+}
+
+.field-shell {
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  background: rgba(248, 250, 252, 0.9);
+  transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.field-shell:focus-within {
+  border-color: rgba(34, 199, 214, 0.6);
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 0 0 3px rgba(34, 199, 214, 0.14);
+}
+
+.field-input,
+.field-select {
+  background: transparent;
+  color: #0f172a;
+  outline: none;
+}
+
+.shipment-option {
+  border: 1px solid rgba(148, 163, 184, 0.34);
+  background: rgba(248, 250, 252, 0.9);
+  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+}
+
+.shipment-option:hover {
+  transform: translateY(-1px);
+  border-color: rgba(34, 199, 214, 0.4);
+}
+
+.shipment-option--selected {
+  border-color: rgba(13, 148, 136, 0.45);
+  background: linear-gradient(180deg, rgba(12, 74, 110, 0.05), rgba(6, 182, 212, 0.08));
+  box-shadow: inset 0 0 0 1px rgba(34, 199, 214, 0.12);
+}
+
+.maritime-wave {
+  animation: waveDrift 18s ease-in-out infinite alternate;
+}
+
+.maritime-wave-slow {
+  animation: waveDrift 24s ease-in-out infinite alternate-reverse;
+}
+
+.chart-line {
+  stroke-dasharray: 1600;
+  stroke-dashoffset: 1600;
+  animation: chartLineReveal 900ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.chart-dot {
+  opacity: 0;
+  transform-origin: center;
+  animation: chartDotReveal 700ms ease-out forwards;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes waveDrift {
+  0% {
+    transform: translateX(-8px) scaleY(0.98);
+    opacity: 0.68;
+  }
+
+  100% {
+    transform: translateX(8px) scaleY(1.02);
+    opacity: 1;
+  }
+}
+
+@keyframes chartLineReveal {
+  0% {
+    stroke-dashoffset: 1600;
+    opacity: 0.2;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes chartDotReveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-shell,
+  .maritime-wave,
+  .maritime-wave-slow,
+  .chart-line,
+  .chart-dot,
+  .maritime-card {
+    animation: none !important;
+  }
+
+  .maritime-card,
+  .shipment-option {
+    transition: none !important;
+  }
 }

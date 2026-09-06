@@ -12,7 +12,7 @@ export function StatusBadge({ label, tone = 'success' }: StatusBadgeProps) {
   }
 
   return (
-    <span className={`inline-flex rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] ring-1 ${styles[tone]}`}>
+    <span className={`inline-flex rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] ring-1 shadow-sm ${styles[tone]}`}>
       {label}
     </span>
   )

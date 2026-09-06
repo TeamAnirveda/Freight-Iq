@@ -21,20 +21,34 @@ export function Overview() {
   })
 
   return (
-    <div>
+    <div className="relative">
+      <div className="pointer-events-none absolute inset-x-0 top-[-32px] h-56 opacity-80">
+        <svg viewBox="0 0 1200 200" className="h-full w-full" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0,120 C170,40 350,155 540,110 S860,44 1200,120" fill="none" stroke="rgba(34,211,238,0.18)" strokeWidth="2" />
+          <path d="M0,148 C190,84 376,170 560,129 S960,68 1200,142" fill="none" stroke="rgba(56,189,248,0.13)" strokeWidth="2" />
+        </svg>
+      </div>
+
       <Header
         title="Freight Intelligence"
         subtitle="Make proactive chartering decisions using freight forecasts, vessel optimization and port feasibility."
       />
 
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {displayMetrics.map((metric) => (
-          <StatCard key={metric.label} label={metric.label} value={metric.value} change={metric.change} trend={metric.trend} />
+        {displayMetrics.map((metric, index) => (
+          <StatCard
+            key={metric.label}
+            label={metric.label}
+            value={metric.value}
+            change={metric.change}
+            trend={metric.trend}
+            style={{ animationDelay: `${index * 70}ms` }}
+          />
         ))}
       </section>
 
       <section className="mt-8 grid gap-6 xl:grid-cols-[1.7fr,0.7fr]">
-        <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-3xl border border-slate-200 bg-white/90 p-5 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.5)] backdrop-blur-sm">
           <div className="mb-5 flex items-center justify-between gap-3">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Freight Market Outlook</p>
@@ -45,7 +59,7 @@ export function Overview() {
           <FreightChart data={freightHistory} />
         </div>
 
-        <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5 shadow-sm">
+        <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.5)]">
           <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
             <TrendingDown size={14} />
             Market outlook
@@ -63,7 +77,7 @@ export function Overview() {
         </div>
       </section>
 
-      <section className="mt-8 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+      <section className="mt-8 rounded-3xl border border-slate-200 bg-white p-5 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.5)]">
         <div className="mb-4 flex items-center justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Recent Cargo Requirements</p>

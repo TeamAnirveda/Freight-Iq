@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom'
 import { CheckCircle2, Clock3, Ship, TrendingUp } from 'lucide-react'
+import { FreightChart } from '../components/FreightChart'
 import { Header } from '../components/Header'
 import { RecommendationCard } from '../components/RecommendationCard'
 import { StepIndicator } from '../components/StepIndicator'
 import { StatusBadge } from '../components/StatusBadge'
 import {
+  freightHistory,
   getRecommendedVessel,
   getRouteForecast,
   getSavedRequirement,
@@ -98,7 +100,7 @@ export function Recommendation() {
     <div>
       <Header title="Chartering Recommendation" subtitle="Decision support based on the active cargo requirement and route profile." />
 
-      <div className="mb-6 rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm">
+      <div className="maritime-card mb-6 rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm" style={{ animationDelay: '20ms' }}>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">Requirement</p>
@@ -116,7 +118,7 @@ export function Recommendation() {
       <StepIndicator steps={steps} />
 
       <div className="space-y-6">
-        <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <section className="maritime-card rounded-3xl border border-slate-200 bg-white p-6 shadow-sm" style={{ animationDelay: '90ms' }}>
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
               <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">Section A</p>
@@ -142,17 +144,7 @@ export function Recommendation() {
               </div>
 
               <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-4">
-                <div className="mb-4 flex items-center justify-between">
-                  <span className="text-xs font-medium uppercase tracking-[0.18em] text-slate-400">Historical → Current → Forecast</span>
-                </div>
-                <div className="flex h-28 items-end gap-2">
-                  {[48, 56, 60, 52, 70, 78, 92, 82, 74, 62, 70, 60, 58].map((h, idx) => (
-                    <div key={idx} className="flex flex-1 flex-col items-center gap-2">
-                      <div className={`w-full rounded-t-xl ${idx < 7 ? 'bg-slate-300' : 'bg-sky-400'}`} style={{ height: `${h}%` }} />
-                      <span className="text-[9px] text-slate-400">{idx + 1}</span>
-                    </div>
-                  ))}
-                </div>
+                <FreightChart data={freightHistory} height={220} />
               </div>
             </div>
 
@@ -166,7 +158,7 @@ export function Recommendation() {
           </div>
         </section>
 
-        <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <section className="maritime-card rounded-3xl border border-slate-200 bg-white p-6 shadow-sm" style={{ animationDelay: '160ms' }}>
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
               <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">Section B</p>
@@ -219,7 +211,7 @@ export function Recommendation() {
           <p className="mt-5 text-sm text-slate-700">{vessel.type} provides the best balance between cargo quantity and port feasibility for this shipment profile.</p>
         </section>
 
-        <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <section className="maritime-card rounded-3xl border border-slate-200 bg-white p-6 shadow-sm" style={{ animationDelay: '230ms' }}>
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
               <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">Section C</p>
@@ -245,8 +237,8 @@ export function Recommendation() {
               { label: 'LOA', status: port ? 'Suitable' : 'Review' },
               { label: 'Beam', status: port ? 'Suitable' : 'Review' },
               { label: 'Cargo Handling', status: port?.cargoHandling === 'High' ? 'Excellent' : 'Suitable' },
-            ].map((constraint) => (
-              <div key={constraint.label} className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700">
+            ].map((constraint, index) => (
+              <div key={constraint.label} style={{ animationDelay: `${260 + index * 50}ms` }} className="maritime-card flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700">
                 <span className="font-medium">{constraint.label}</span>
                 <span className="inline-flex items-center gap-2 text-emerald-700">
                   <CheckCircle2 size={16} />
@@ -262,7 +254,7 @@ export function Recommendation() {
           </div>
         </section>
 
-        <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <section className="maritime-card rounded-3xl border border-slate-200 bg-white p-6 shadow-sm" style={{ animationDelay: '300ms' }}>
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
               <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">Section D</p>
@@ -275,15 +267,15 @@ export function Recommendation() {
               { label: 'SPOT', description: 'Current market fixing' },
               { label: 'SHORT-TERM', description: 'Multiple voyages over a shorter period' },
               { label: 'MID-TERM', description: 'Multiple voyages over a longer period' },
-            ].map((option) => {
+            ].map((option, index) => {
               const highlighted = option.label === strategy.label
               return (
-                <div key={option.label} className={`rounded-2xl border p-4 ${highlighted ? 'border-slate-900 bg-slate-900 text-white shadow-sm' : 'border-slate-200 bg-slate-50 text-slate-700'}`}>
+                <div key={option.label} style={{ animationDelay: `${320 + index * 60}ms` }} className={`maritime-card rounded-2xl border p-4 ${highlighted ? 'maritime-card--recommended border-cyan-400/50 bg-white text-slate-900' : 'border-slate-200 bg-slate-50 text-slate-700'}`}>
                   <div className="flex items-center justify-between gap-2">
-                    <span className={`text-[10px] font-semibold uppercase tracking-[0.18em] ${highlighted ? 'text-slate-300' : 'text-slate-400'}`}>{option.label}</span>
+                    <span className={`text-[10px] font-semibold uppercase tracking-[0.18em] ${highlighted ? 'text-cyan-700' : 'text-slate-400'}`}>{option.label}</span>
                     {highlighted ? <StatusBadge label="Recommended" tone="neutral" /> : null}
                   </div>
-                  <p className={`mt-3 text-sm ${highlighted ? 'text-slate-300' : 'text-slate-600'}`}>{option.description}</p>
+                  <p className={`mt-3 text-sm ${highlighted ? 'text-slate-700' : 'text-slate-600'}`}>{option.description}</p>
                 </div>
               )
             })}
@@ -321,6 +313,7 @@ export function Recommendation() {
             { label: 'Expected Freight', value: displayExpected },
             { label: 'Recommended Fixing Window', value: strategy.fixingWindow },
           ]}
+          style={{ animationDelay: '420ms' }}
         />
       </div>
     </div>
