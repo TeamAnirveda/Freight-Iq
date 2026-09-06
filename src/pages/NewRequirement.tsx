@@ -2,7 +2,6 @@ import { type ChangeEvent, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Header } from '../components/Header'
 import {
-  cargoOptions,
   contractOptions,
   defaultRequirement,
   destinationOptions,
@@ -46,18 +45,7 @@ export function NewRequirement() {
               <h2 className="text-lg font-semibold text-slate-900">Cargo</h2>
             </div>
 
-            <div className="grid gap-5 md:grid-cols-2">
-              <label className="block text-sm text-slate-600">
-                <span className="mb-2 block font-medium text-slate-700">Cargo Type</span>
-                <select value={form.cargoType} onChange={handleChange('cargoType')} className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-slate-800 outline-none transition focus:border-slate-300 focus:bg-white">
-                  {cargoOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </label>
-
+            <div className="max-w-md">
               <label className="block text-sm text-slate-600">
                 <span className="mb-2 block font-medium text-slate-700">Total Quantity</span>
                 <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 focus-within:border-slate-300 focus-within:bg-white">
@@ -153,7 +141,7 @@ export function NewRequirement() {
             </div>
           </section>
 
-          <div className="flex justify-end gap-3 pt-2">
+          <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:justify-end">
             <button type="button" onClick={() => navigate('/')} className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50">
               Cancel
             </button>

@@ -3,8 +3,23 @@ import { Header } from '../components/Header'
 import { FreightChart } from '../components/FreightChart'
 import { StatCard } from '../components/StatCard'
 import { cargoRequirements, freightHistory, marketMetrics } from '../data/mockData'
+import { formatCurrencyRate, parseNumericValue, usePreferences } from '../utils/preferences'
 
 export function Overview() {
+  const preferences = usePreferences()
+
+  const displayMetrics = marketMetrics.map((metric) => {
+    if (metric.label === 'Current Market' || metric.label === '7-Day Forecast') {
+      const numericValue = parseNumericValue(metric.value)
+      return {
+        ...metric,
+        value: formatCurrencyRate(numericValue, preferences.currency, preferences.units),
+      }
+    }
+
+    return metric
+  })
+
   return (
     <div>
       <Header
@@ -13,7 +28,7 @@ export function Overview() {
       />
 
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {marketMetrics.map((metric) => (
+        {displayMetrics.map((metric) => (
           <StatCard key={metric.label} label={metric.label} value={metric.value} change={metric.change} trend={metric.trend} />
         ))}
       </section>
@@ -60,8 +75,8 @@ export function Overview() {
           </button>
         </div>
 
-        <div className="overflow-hidden rounded-2xl border border-slate-200">
-          <table className="min-w-full text-left text-sm">
+        <div className="overflow-x-auto rounded-2xl border border-slate-200">
+          <table className="min-w-[720px] text-left text-sm md:min-w-full">
             <thead className="bg-slate-50 text-slate-500">
               <tr>
                 <th className="px-4 py-3 font-medium">Cargo</th>

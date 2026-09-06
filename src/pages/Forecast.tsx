@@ -2,9 +2,11 @@ import { Link } from 'react-router-dom'
 import { Header } from '../components/Header'
 import { FreightChart } from '../components/FreightChart'
 import { freightHistory, getRecommendedVessel, getRouteForecast, getSavedRequirement } from '../data/mockData'
+import { formatCurrencyRate, parseNumericValue, usePreferences } from '../utils/preferences'
 
 export function Forecast() {
   const requirement = getSavedRequirement()
+  const preferences = usePreferences()
 
   if (!requirement) {
     return (
@@ -21,6 +23,8 @@ export function Forecast() {
   const route = `${requirement.origin} → ${requirement.destination}`
   const vessel = getRecommendedVessel(requirement.quantity)
   const forecast = getRouteForecast(requirement)
+  const displayCurrent = formatCurrencyRate(parseNumericValue(forecast.current), preferences.currency, preferences.units)
+  const displayExpected = formatCurrencyRate(parseNumericValue(forecast.expected), preferences.currency, preferences.units)
 
   return (
     <div>
@@ -53,11 +57,11 @@ export function Forecast() {
       <div className="mt-8 grid gap-4 md:grid-cols-4">
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <p className="text-sm text-slate-500">Current Market</p>
-          <p className="mt-4 text-2xl font-semibold text-slate-900">{forecast.current}</p>
+          <p className="mt-4 text-2xl font-semibold text-slate-900">{displayCurrent}</p>
         </div>
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <p className="text-sm text-slate-500">Forecast</p>
-          <p className="mt-4 text-2xl font-semibold text-slate-900">{forecast.expected}</p>
+          <p className="mt-4 text-2xl font-semibold text-slate-900">{displayExpected}</p>
         </div>
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <p className="text-sm text-slate-500">Expected Change</p>

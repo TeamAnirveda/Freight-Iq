@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 import { Header } from '../components/Header'
 import { getRecommendedVessel, getSavedRequirement } from '../data/mockData'
+import { formatMass, usePreferences } from '../utils/preferences'
 
 export function Vessels() {
   const requirement = getSavedRequirement()
+  const preferences = usePreferences()
 
   if (!requirement) {
     return (
@@ -29,14 +31,14 @@ export function Vessels() {
     <div>
       <Header
         title="Vessel Analysis"
-        subtitle={`${requirement.cargoType} · ${requirement.quantity} MT · ${requirement.origin} → ${requirement.destination}`}
+        subtitle={`${requirement.cargoType} · ${formatMass(Number(requirement.quantity), preferences.units)} · ${requirement.origin} → ${requirement.destination}`}
       />
 
       <div className="mb-6 rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm">
         <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">Current Requirement</p>
         <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-slate-700">
           <span className="font-semibold text-slate-900">{requirement.cargoType}</span>
-          <span>{requirement.quantity} MT</span>
+          <span>{formatMass(Number(requirement.quantity), preferences.units)}</span>
           <span>{requirement.origin} → {requirement.destination}</span>
         </div>
       </div>

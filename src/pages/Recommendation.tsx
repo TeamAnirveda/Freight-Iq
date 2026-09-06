@@ -10,6 +10,7 @@ import {
   getSavedRequirement,
   portReferences,
 } from '../data/mockData'
+import { formatCurrencyRate, formatMass, parseNumericValue, usePreferences } from '../utils/preferences'
 
 function formatDate(value: string) {
   if (!value) {
@@ -30,6 +31,7 @@ function formatDate(value: string) {
 
 export function Recommendation() {
   const requirement = getSavedRequirement()
+  const preferences = usePreferences()
 
   if (!requirement) {
     return (
@@ -48,6 +50,9 @@ export function Recommendation() {
   const forecast = getRouteForecast(requirement)
   const port = portReferences.find((item) => item.name === requirement.destination)
   const loadingWindow = `${formatDate(requirement.startDate)} – ${formatDate(requirement.endDate)}`
+  const displayCurrent = formatCurrencyRate(parseNumericValue(forecast.current), preferences.currency, preferences.units)
+  const displayExpected = formatCurrencyRate(parseNumericValue(forecast.expected), preferences.currency, preferences.units)
+  const displayQuantity = formatMass(Number(requirement.quantity), preferences.units)
 
   const strategyMap = {
     'Spot Voyage': {
@@ -99,7 +104,7 @@ export function Recommendation() {
             <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">Requirement</p>
             <div className="mt-3 flex flex-wrap items-center gap-4 text-sm text-slate-600">
               <span className="font-semibold text-slate-900">{requirement.cargoType}</span>
-              <span>{requirement.quantity} MT</span>
+              <span>{displayQuantity}</span>
               <span>{route}</span>
               <span>{loadingWindow}</span>
             </div>
@@ -124,11 +129,11 @@ export function Recommendation() {
               <div className="grid gap-4 md:grid-cols-3">
                 <div>
                   <p className="text-sm text-slate-500">Current Freight</p>
-                  <p className="mt-2 text-2xl font-semibold text-slate-900">{forecast.current}</p>
+                  <p className="mt-2 text-2xl font-semibold text-slate-900">{displayCurrent}</p>
                 </div>
                 <div>
                   <p className="text-sm text-slate-500">Expected Freight</p>
-                  <p className="mt-2 text-2xl font-semibold text-slate-900">{forecast.expected}</p>
+                  <p className="mt-2 text-2xl font-semibold text-slate-900">{displayExpected}</p>
                 </div>
                 <div>
                   <p className="text-sm text-slate-500">Forecast Change</p>
@@ -182,8 +187,8 @@ export function Recommendation() {
               </div>
             </div>
 
-            <div className="overflow-hidden rounded-2xl border border-slate-200">
-              <table className="min-w-full text-left text-sm">
+            <div className="overflow-x-auto rounded-2xl border border-slate-200">
+              <table className="min-w-[520px] text-left text-sm md:min-w-full">
                 <thead className="bg-slate-50 text-slate-500">
                   <tr>
                     <th className="px-4 py-3 font-medium">Vessel Type</th>
@@ -313,7 +318,7 @@ export function Recommendation() {
             { label: 'Recommended Vessel', value: vessel.type },
             { label: 'Route', value: route },
             { label: 'Strategy', value: strategy.recommended },
-            { label: 'Expected Freight', value: forecast.expected },
+            { label: 'Expected Freight', value: displayExpected },
             { label: 'Recommended Fixing Window', value: strategy.fixingWindow },
           ]}
         />

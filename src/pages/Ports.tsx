@@ -2,9 +2,11 @@ import { Link } from 'react-router-dom'
 import { Header } from '../components/Header'
 import { PortCard } from '../components/PortCard'
 import { getSavedRequirement, portReferences } from '../data/mockData'
+import { formatMass, usePreferences } from '../utils/preferences'
 
 export function Ports() {
   const requirement = getSavedRequirement()
+  const preferences = usePreferences()
 
   if (!requirement) {
     return (
@@ -32,7 +34,7 @@ export function Ports() {
     <div>
       <Header
         title="Port Feasibility"
-        subtitle={`${requirement.origin} → ${requirement.destination} · ${requirement.cargoType} · ${requirement.quantity} MT`}
+        subtitle={`${requirement.origin} → ${requirement.destination} · ${requirement.cargoType} · ${formatMass(Number(requirement.quantity), preferences.units)}`}
       />
 
       <div className="mb-6 rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm">

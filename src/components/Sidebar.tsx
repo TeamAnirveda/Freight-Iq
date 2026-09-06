@@ -11,17 +11,31 @@ const icons = {
   'lightbulb': Lightbulb,
 } as const
 
-export function Sidebar() {
+type SidebarProps = {
+  mobile?: boolean
+  onNavigate?: () => void
+}
+
+export function Sidebar({ mobile = false, onNavigate }: SidebarProps) {
+  const navClassName = ({ isActive }: { isActive: boolean }) =>
+    `flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
+      isActive
+        ? 'bg-slate-900 text-white shadow-sm'
+        : 'text-slate-600 hover:bg-slate-200/80 hover:text-slate-900'
+    }`
+
   return (
-    <aside className="flex h-screen w-full flex-col border-r border-slate-200 bg-slate-50/90 px-4 py-5 lg:w-72">
-      <div className="mb-8 flex items-center gap-3 px-2">
-        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-900 text-sm font-semibold text-white">
-          FQ
+    <aside className={`flex w-full flex-col ${mobile ? 'h-auto' : 'h-screen border-r border-slate-200 bg-slate-50/90 px-4 py-5 lg:w-72'} ${mobile ? 'bg-slate-50/95 px-2 py-2' : ''}`}>
+      {!mobile ? (
+        <div className="mb-8 flex items-center gap-3 px-2">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-900 text-sm font-semibold text-white">
+            FQ
+          </div>
+          <div>
+            <div className="text-lg font-semibold tracking-tight text-slate-900">FreightIQ</div>
+          </div>
         </div>
-        <div>
-          <div className="text-lg font-semibold tracking-tight text-slate-900">FreightIQ</div>
-        </div>
-      </div>
+      ) : null}
 
       <div className="space-y-6">
         <div>
@@ -34,13 +48,8 @@ export function Sidebar() {
                 <NavLink
                   key={item.path}
                   to={item.path}
-                  className={({ isActive }) =>
-                    `flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
-                      isActive
-                        ? 'bg-slate-900 text-white shadow-sm'
-                        : 'text-slate-600 hover:bg-slate-200/80 hover:text-slate-900'
-                    }`
-                  }
+                  onClick={onNavigate}
+                  className={navClassName}
                 >
                   <Icon size={16} />
                   <span>{item.label}</span>
@@ -60,13 +69,8 @@ export function Sidebar() {
                 <NavLink
                   key={item.path}
                   to={item.path}
-                  className={({ isActive }) =>
-                    `flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
-                      isActive
-                        ? 'bg-slate-900 text-white shadow-sm'
-                        : 'text-slate-600 hover:bg-slate-200/80 hover:text-slate-900'
-                    }`
-                  }
+                  onClick={onNavigate}
+                  className={navClassName}
                 >
                   <Icon size={16} />
                   <span>{item.label}</span>
@@ -80,6 +84,7 @@ export function Sidebar() {
       <div className="mt-auto space-y-2 border-t border-slate-200 pt-4">
         <NavLink
           to="/settings"
+          onClick={onNavigate}
           className={({ isActive }) =>
             `flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
               isActive
