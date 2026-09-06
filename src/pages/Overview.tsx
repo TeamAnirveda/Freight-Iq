@@ -34,6 +34,10 @@ export function Overview() {
         subtitle="Make proactive chartering decisions using freight forecasts, vessel optimization and port feasibility."
       />
 
+      <section className="overview-hero-shell mb-6" aria-label="Maritime hero banner">
+        <div className="overview-hero" />
+      </section>
+
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {displayMetrics.map((metric, index) => (
           <StatCard

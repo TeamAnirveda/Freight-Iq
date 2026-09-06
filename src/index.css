@@ -62,6 +62,35 @@ select {
   animation: pageFadeIn 260ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.overview-hero-shell {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.overview-hero {
+  position: relative;
+  overflow: hidden;
+  height: 220px;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.26);
+  background:
+    linear-gradient(90deg, rgba(5, 17, 31, 0.18) 0%, rgba(8, 30, 51, 0.12) 26%, rgba(13, 45, 71, 0.06) 48%, rgba(8, 20, 35, 0.1) 100%),
+    url('/overview-hero.png') 72% center / cover no-repeat;
+  box-shadow: 0 18px 42px -30px rgba(15, 23, 42, 0.72), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  filter: saturate(1.08) contrast(1.04) brightness(1.05);
+  animation: heroFadeIn 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.overview-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(4, 15, 30, 0.16) 0%, rgba(4, 15, 30, 0.08) 24%, rgba(4, 15, 30, 0) 52%, rgba(4, 15, 30, 0.08) 100%),
+    linear-gradient(180deg, rgba(5, 16, 30, 0.04) 0%, rgba(5, 16, 30, 0.12) 100%);
+}
+
 .maritime-card {
   position: relative;
   overflow: hidden;
@@ -234,18 +263,46 @@ select {
   }
 }
 
+@keyframes heroFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
 @media (prefers-reduced-motion: reduce) {
   .page-shell,
   .maritime-wave,
   .maritime-wave-slow,
   .chart-line,
   .chart-dot,
-  .maritime-card {
+  .maritime-card,
+  .overview-hero {
     animation: none !important;
   }
 
   .maritime-card,
   .shipment-option {
     transition: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .overview-hero {
+    height: 190px;
+    background-position: 68% center;
+  }
+}
+
+@media (max-width: 480px) {
+  .overview-hero {
+    height: 170px;
+    background-position: 70% center;
   }
 }
