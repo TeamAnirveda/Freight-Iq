@@ -1,0 +1,2 @@
+port_id,port_name,state,port_type,max_loa_m,max_beam_m,max_draft_m,max_dwt_mt,cargo_types,annual_capacity_mt,channel_depth_m,notes,source_url,source_date
+PARADIP,Paradip Port,Odisha,Major Port,300,,,,"Crude Oil; POL products; Iron Ore; Thermal Coal; Chrome Ore; Coking Coal; Manganese Ore; Charge Chrome; Ferro Chrome; Ferro Manganese; Limestone; Food-Grain; Fertiliser; DBM; Project Cargo; Containers",289000000,18.7,"Entrance Channel min depth 17.1 m; Approach Channel 18.7 m; Port handling up to LOA 300 m (per site)",https://paradipport.gov.in/know-your-port/,"2 March, 2026"
